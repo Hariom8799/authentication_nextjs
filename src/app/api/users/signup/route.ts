@@ -41,6 +41,7 @@ export async function POST (req : NextRequest){
 
     }
     catch(err : any){
+        console.log("error in signup page")
         console.log(err)
     }
 }
