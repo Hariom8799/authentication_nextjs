@@ -5,7 +5,7 @@ export function getDataFromToken (req:NextRequest){
     try{
 
         const tokenData = req.cookies.get("token")?.value || "";
-        const data:any = jwt.verify("token",process.env.JWT_SECRET!)
+        const data:any = jwt.verify(tokenData ,process.env.JWT_SECRET!)
 
         return data.id;
 

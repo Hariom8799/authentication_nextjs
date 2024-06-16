@@ -27,10 +27,13 @@ export async function POST (req : NextRequest){
             email
         })
 
-        console.log(newUser);
+        
 
         // send vaerification email 
         await sendEmail({email, emailType : "VERIFY" , userID : newUser._id});
+
+        const user = await User.findOne({email});
+        console.log(user)
 
         return NextResponse.json({
             message : "User created successfully",
