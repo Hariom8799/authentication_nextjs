@@ -5,35 +5,36 @@ import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-const page = () => {
+const Page = () => {
 
     const [token, setToken] = useState(" ");
     const [verified, setVerified] = useState(false);
     const [error, setError] = useState(false);
     const searchParams = useSearchParams(); 
 
-    const verifyEmail = async ()=>{
-        try{
-            await axios.post("/api/users/verifyemail",{token});
-            setVerified(true);
-            setError(false)
-        }
-        catch(error : any){
-            setError(true);
-            console.log(error.response.data);
-        }   
-    }
+    
 
     useEffect(()=>{
         setError(false)
         // const urlToken : any = window.location.search.split('=')[1];
         const urlToken:any = searchParams.get('token')
         setToken(urlToken || "");
-    },[])
+    },[searchParams])
 
     useEffect(()=>{
         setError(false)
         if(token.length > 0){
+            const verifyEmail = async ()=>{
+                try{
+                    await axios.post("/api/users/verifyemail",{token});
+                    setVerified(true);
+                    setError(false)
+                }
+                catch(error : any){
+                    setError(true);
+                    console.log(error.response.data);
+                }   
+            }
             verifyEmail();
         }
     },[token])
@@ -62,4 +63,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
